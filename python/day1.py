@@ -1,3 +1,5 @@
+from time import process_time
+
 input_path = './input_day1_1.txt'
 
 class Day1():
@@ -32,10 +34,13 @@ def main():
         for entry_input in input_fp:
             input1.append(int(entry_input))
 
+    t = process_time()
     result_1 = Day1.computeResult1_1(Day1.foundTwoEntries(input1))
+    print(f'Result 1 = {result_1} (in {process_time() - t}s)' )
+
+    t = process_time()
     result_2 = Day1.computeResult1_2(Day1.foundThreeEntries(input1))
-    print(f'Result 1 = {result_1}')
-    print(f'Result 2 = {result_2}')
+    print(f'Result 2 = {result_2} (in {process_time() - t}s)')
 
 
 if __name__ == '__main__':
