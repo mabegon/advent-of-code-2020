@@ -11,12 +11,22 @@ class TestDay2(TestCase):
         self.assertEqual('d', dict['letter'])
         self.assertEqual('pddzddkdvqgxndd', dict['password'])
 
-    def test_validate_must_be_True(self):
+    def test_validate_with_policy_rules_one_must_be_True(self):
         min, max, letter, password = 1,3, 'a', 'abcde'
-        self.assertTrue(Day2.validatePassword(min, max, letter, password))
+        self.assertTrue(Day2.validatePasswordWithPolicyRules1(min, max, letter, password))
 
-    def test_validate_must_be_False(self):
+    def test_validate_with_policy_rules_one_must_be_False(self):
         min, max, letter, password = 1, 3, 'b', 'cdefg'
-        self.assertFalse(Day2.validatePassword(min, max, letter, password))
+        self.assertFalse(Day2.validatePasswordWithPolicyRules1(min, max, letter, password))
 
+    def test_validate_with_policy_rules_Two_must_be_True(self):
+        min, max, letter, password = 1,3, 'a', 'abcde'
+        self.assertTrue(Day2.validatePasswordWithPolicyRules2(min, max, letter, password))
 
+    def test_validate_with_policy_rules_Two_must_be_False(self):
+        min, max, letter, password = 1, 3, 'b', 'cdefg'
+        self.assertFalse(Day2.validatePasswordWithPolicyRules2(min, max, letter, password))
+
+    def test_validate_with_policy_rules_Two_must_be_False_2(self):
+        min, max, letter, password = 2, 9, 'c', 'ccccccccc'
+        self.assertFalse(Day2.validatePasswordWithPolicyRules2(min, max, letter, password))
