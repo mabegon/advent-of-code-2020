@@ -6,8 +6,8 @@ class TestDay2(TestCase):
     def test_regexp_found_all_values(self):
         line = "2-8 d: pddzddkdvqgxndd"
         dict = Day2.parseLine(line)
-        self.assertEqual(2, dict['min'])
-        self.assertEqual(8, dict['max'])
+        self.assertEqual(2, dict['number1'])
+        self.assertEqual(8, dict['number2'])
         self.assertEqual('d', dict['letter'])
         self.assertEqual('pddzddkdvqgxndd', dict['password'])
 

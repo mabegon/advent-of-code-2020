@@ -5,12 +5,12 @@ from time import process_time
 class Day2:
     @staticmethod
     def parseLine(line):
-        m = re.match(r"(?P<min>\d+)-(?P<max>\d+) (?P<letter>.): (?P<password>\w+)", line)
+        m = re.match(r"(?P<number1>\d+)-(?P<number2>\d+) (?P<letter>.): (?P<password>\w+)", line)
 
         lineDict = m.groupdict()
 
-        lineDict['min'] = int(lineDict['min'])
-        lineDict['max'] = int(lineDict['max'])
+        lineDict['number1'] = int(lineDict['number1'])
+        lineDict['number2'] = int(lineDict['number2'])
 
         return lineDict
 
@@ -34,15 +34,15 @@ def main():
     with open(input_path) as input_fp:
         for line in input_fp:
             line_parsed = Day2.parseLine(line)
-            valid_password_1 = Day2.validatePasswordWithPolicyRules1(line_parsed['min'],
-                                                                     line_parsed['max'],
+            valid_password_1 = Day2.validatePasswordWithPolicyRules1(line_parsed['number1'],
+                                                                     line_parsed['number2'],
                                                                      line_parsed['letter'],
                                                                      line_parsed['password'])
             if valid_password_1:
                 number_valid_passwords_1 += 1
 
-            valid_password_2 = Day2.validatePasswordWithPolicyRules2(line_parsed['min'],
-                                                                     line_parsed['max'],
+            valid_password_2 = Day2.validatePasswordWithPolicyRules2(line_parsed['number1'],
+                                                                     line_parsed['number2
                                                                      line_parsed['letter'],
                                                                      line_parsed['password'])
             if valid_password_2:
