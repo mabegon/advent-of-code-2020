@@ -2,7 +2,8 @@ from time import process_time
 
 input_path = './input_day1_1.txt'
 
-class Day1():
+
+class Day1:
     @staticmethod
     def foundTwoEntries(input):
         for entry1 in input:
@@ -17,9 +18,10 @@ class Day1():
             for entry2 in input:
                 if entry1 != entry2:
                     for entry3 in input:
-                        if entry1 != entry3 and entry2 != entry3 and ((entry1 + entry2+ entry3) == 2020):
+                        if entry1 != entry3 and entry2 != entry3 and ((entry1 + entry2 + entry3) == 2020):
                             return [entry1, entry2, entry3]
         return [None]
+
     @staticmethod
     def computeResult1_1(entry_list):
         return entry_list[0] * entry_list[1]
@@ -27,6 +29,7 @@ class Day1():
     @staticmethod
     def computeResult1_2(entry_list):
         return entry_list[0] * entry_list[1] * entry_list[2]
+
 
 def main():
     input1 = []
@@ -36,7 +39,7 @@ def main():
 
     t = process_time()
     result_1 = Day1.computeResult1_1(Day1.foundTwoEntries(input1))
-    print(f'Result 1 = {result_1} (in {process_time() - t}s)' )
+    print(f'Result 1 = {result_1} (in {process_time() - t}s)')
 
     t = process_time()
     result_2 = Day1.computeResult1_2(Day1.foundThreeEntries(input1))
