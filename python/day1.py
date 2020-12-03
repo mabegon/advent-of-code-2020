@@ -1,6 +1,6 @@
 from time import process_time
 
-input_path = './input_day1_1.txt'
+input_path = '../input_day1_1.txt'
 
 
 class Day1:

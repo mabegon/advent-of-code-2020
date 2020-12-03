@@ -27,7 +27,7 @@ class Day2:
 
 
 def main():
-    input_path = './input_day2_1.txt'
+    input_path = '../input_day2_1.txt'
     number_valid_passwords_1 = 0
     number_valid_passwords_2 = 0
     t = process_time()
@@ -42,12 +42,11 @@ def main():
                 number_valid_passwords_1 += 1
 
             valid_password_2 = Day2.validatePasswordWithPolicyRules2(line_parsed['number1'],
-                                                                     line_parsed['number2
+                                                                     line_parsed['number2'],
                                                                      line_parsed['letter'],
                                                                      line_parsed['password'])
             if valid_password_2:
                 number_valid_passwords_2 += 1
-
     print(f'Process Time {process_time() - t}s')
     print(f'Number of Valid Passwords 1 is {number_valid_passwords_1}')
     print(f'Number of Valid Passwords 2 is {number_valid_passwords_2}')
