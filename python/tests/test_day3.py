@@ -77,3 +77,23 @@ class TestDay3(TestCase):
         with open('./input_test_day3.txt') as input_fp:
             map = Day3.mapFromInput(input_fp)
             self.assertEqual(7, Day3.howManyTrees(map, position, slope))
+
+    def test_exemple_from_Question_2_slope_1_1(self):
+        position = {'x': 0, 'y': 0}
+        slope = {'x': 1, 'y': 1}
+
+        with open('./input_test_day3.txt') as input_fp:
+            map = Day3.mapFromInput(input_fp)
+            self.assertEqual(2, Day3.howManyTrees(map, position, slope))
+
+    def test_exemple_from_Question_2(self):
+        position = {'x': 0, 'y': 0}
+        slopes = [{'x': 1, 'y': 1},
+                  {'x': 3, 'y': 1},
+                  {'x': 5, 'y': 1},
+                  {'x': 7, 'y': 1},
+                  {'x': 1, 'y': 2},]
+
+        with open('./input_test_day3.txt') as input_fp:
+            map = Day3.mapFromInput(input_fp)
+            self.assertEqual(336, Day3.howManyTreesForSlopes(map, position, slopes))

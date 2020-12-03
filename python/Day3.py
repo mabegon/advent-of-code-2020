@@ -40,17 +40,33 @@ class Day3:
                 trees += 1
         return trees
 
+    @staticmethod
+    def howManyTreesForSlopes(map, position, slopes):
+        result = 1
+        for slope in slopes:
+            result *= Day3.howManyTrees(map, position, slope)
+        return result
+
+
 def main():
 
     with open('../input_day3_1.txt') as input_fp:
-        t = process_time()
+
         position = {'x': 0, 'y': 0}
         slope = {'x': 3, 'y': 1}
         map = Day3.mapFromInput(input_fp)
+        t = process_time()
         result_1 = Day3.howManyTrees(map, position, slope)
         print(f'Result 1 = {result_1} (in {process_time() - t}s)')
 
-
+        t = process_time()
+        slopes = [{'x': 1, 'y': 1},
+                  {'x': 3, 'y': 1},
+                  {'x': 5, 'y': 1},
+                  {'x': 7, 'y': 1},
+                  {'x': 1, 'y': 2}, ]
+        result_2 = Day3.howManyTreesForSlopes(map, position, slopes)
+        print(f'Result 2 = {result_2} (in {process_time() - t}s)')
 
 if __name__ == '__main__':
     main()
