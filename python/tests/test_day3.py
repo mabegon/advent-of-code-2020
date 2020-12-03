@@ -75,4 +75,5 @@ class TestDay3(TestCase):
         slope = {'x': 3, 'y': 1}
 
         with open('./input_test_day3.txt') as input_fp:
-            self.assertEqual(7, Day3.howManyTrees(input_fp, position, slope))
+            map = Day3.mapFromInput(input_fp)
+            self.assertEqual(7, Day3.howManyTrees(map, position, slope))

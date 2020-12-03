@@ -31,9 +31,8 @@ class Day3:
         return map
 
     @staticmethod
-    def howManyTrees(input_fp, position, slope):
+    def howManyTrees(map, position, slope):
         current_position = position
-        map = Day3.mapFromInput(input_fp)
         trees = 0
         while not Day3.isFinish(map, current_position):
             current_position = Day3.computePosition(map, current_position, slope)
@@ -47,7 +46,8 @@ def main():
         t = process_time()
         position = {'x': 0, 'y': 0}
         slope = {'x': 3, 'y': 1}
-        result_1 = Day3.howManyTrees(input_fp, position, slope)
+        map = Day3.mapFromInput(input_fp)
+        result_1 = Day3.howManyTrees(map, position, slope)
         print(f'Result 1 = {result_1} (in {process_time() - t}s)')
 
 
