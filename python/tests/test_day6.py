@@ -10,3 +10,7 @@ class TestDay6(TestCase):
     def test_result_must_be_11(self):
         with open('./input_test_day6.txt') as fp:
             self.assertEqual(11, python.Day6.compute_result(fp))
+
+    def test_result_2_must_be_6(self):
+        with open('./input_test_day6.txt') as fp:
+            self.assertEqual(6, python.Day6.compute_result2(fp))
