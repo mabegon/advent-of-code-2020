@@ -7,7 +7,7 @@ def parse_line(line):
     key = ''
     for occurrence in occurrences:
        if occurrence[0] != '':
-           values[occurrence[1]] = occurrence[0]
+           values[occurrence[1]] = int(occurrence[0])
        else:
            key = occurrence[1]
     return key, values
@@ -45,19 +45,42 @@ def who_can_hold(input_bag, dict):
     return result
 
 
-def compute_question_1(fp, bag):
-    rules ={}
-    for line in fp:
-        key, values = parse_line(line)
-        rules[key] = values
+def compute_question_1(rules, bag):
     who_can_hold_dict = who_can_hold_by_rules(rules)
     result = who_can_hold(bag, who_can_hold_dict)
     return len(result)
 
+def get_rules(fp):
+    rules = {}
+    for line in fp:
+        key, values = parse_line(line)
+        rules[key] = values
+    return rules
+
+
+def count_bags(bag, rules):
+    result = 0
+    if bag not in rules.keys() or rules[bag] is None:
+
+        return 0
+    else:
+        content_bags = rules[bag]
+        for content_bag in content_bags.keys():
+            result += content_bags[content_bag] * count_bags(content_bag, rules)
+            result += content_bags[content_bag]
+    return result
+
+def compute_question_2(rules, bag):
+    return count_bags(bag, rules)
+
+
 def main():
     with open('../input_day7_1.txt') as fp:
-        result_1 = compute_question_1(fp, 'shiny gold')
+        rules = get_rules(fp)
+        result_1 = compute_question_1(rules, 'shiny gold')
         print(f'Result 1 is {result_1}')
+        result_2 = compute_question_2(rules, 'shiny gold')
+        print(f'Result 2 is {result_2}')
 
 
 if __name__ == '__main__':
