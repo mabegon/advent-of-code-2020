@@ -2,22 +2,22 @@ import re
 
 
 def parse_line(line):
-    line_parsed = {}
     occurrences = re.findall('(\d)?\s?(\w+\s\w+)\sbag', line)
+    values = {}
+    key = ''
     for occurrence in occurrences:
-        line_parsed[occurrence[1]] = occurrence[0] if occurrence[0] != '' else 'container'
-    return line_parsed
+       if occurrence[0] != '':
+           values[occurrence[1]] = occurrence[0]
+       else:
+           key = occurrence[1]
+    return key, values
 
 
-def who_can_hold_dict(rules):
-    pass
-
-
-def who_can_hold_by_rule(rule):
-    # {'light red': 'container', 'bright white': '1', 'muted yellow': '2'}
+def who_can_hold_by_rule(container_bag, content_bags):
+    # {'light red': { 'bright white': '1', 'muted yellow': '2'}}
     result = {}
-    container_bag = [element for element in rule.keys() if rule[element] == 'container'][0]
-    content_bags = [element for element in rule.keys() if rule[element] != 'container']
+    #container_bag = [element for element in rule.keys() if rule[element] == 'container'][0]
+    #content_bags = [element for element in rule.keys() if rule[element] != 'container']
     for bag in content_bags:
         result[bag] = container_bag
     return result
@@ -25,8 +25,9 @@ def who_can_hold_by_rule(rule):
 
 def who_can_hold_by_rules(rules):
     who_dict_consolidated = {}
-    for rule in rules:
-        who_by_rule = who_can_hold_by_rule(rule)
+    for rule_key in rules.keys():
+
+        who_by_rule = who_can_hold_by_rule(rule_key, rules[rule_key])
         for bag in who_by_rule.keys():
             if bag not in who_dict_consolidated.keys():
                 who_dict_consolidated[bag] = [who_by_rule[bag]]
@@ -45,9 +46,10 @@ def who_can_hold(input_bag, dict):
 
 
 def compute_question_1(fp, bag):
-    rules = []
+    rules ={}
     for line in fp:
-        rules.append(parse_line(line))
+        key, values = parse_line(line)
+        rules[key] = values
     who_can_hold_dict = who_can_hold_by_rules(rules)
     result = who_can_hold(bag, who_can_hold_dict)
     return len(result)
