@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from python.Day8 import Handheld, parse_input
+from python.Day8 import Handheld, parse_input, found_fixed_code
 
 
 class TestDay8(TestCase):
@@ -17,6 +17,14 @@ class TestDay8(TestCase):
         code = [{'operation': handheld.OP_NOP, 'arg1': '+0'}]
         handheld.load(code)
         self.assertEqual(0, handheld.head)
+
+    def test_handheld_accumulator_must_be_0_when_code_is_loaded(self):
+        handheld = Handheld()
+        code = [{'operation': handheld.OP_NOP, 'arg1': '+0'}]
+        handheld.accumulator = 1
+        handheld.load(code)
+        self.assertEqual(0, handheld.accumulator)
+
 
     def test_handheld_stack_head_must_be_None_if_code_loaded_is_empty(self):
         handheld = Handheld()
@@ -86,17 +94,58 @@ class TestDay8(TestCase):
 
     def test_run_before_loop(self):
         handheld = Handheld()
-        code = [{'opcode': handheld.OP_NOP, 'arg1': '+0'},
-                {'opcode': handheld.OP_ACC, 'arg1': '+1'},
-                {'opcode': handheld.OP_JMP, 'arg1': '+4'},
-                {'opcode': handheld.OP_ACC, 'arg1': '+3'},
-                {'opcode': handheld.OP_JMP, 'arg1': '-3'},
-                {'opcode': handheld.OP_ACC, 'arg1': '-99'},
-                {'opcode': handheld.OP_ACC, 'arg1': '+1'},
-                {'opcode': handheld.OP_JMP, 'arg1': '-4'},
-                {'opcode': handheld.OP_ACC, 'arg1': '+6'},
+        code = [{'opcode': Handheld.OP_NOP, 'arg1': '+0'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '+1'},
+                {'opcode': Handheld.OP_JMP, 'arg1': '+4'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '+3'},
+                {'opcode': Handheld.OP_JMP, 'arg1': '-3'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '-99'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '+1'},
+                {'opcode': Handheld.OP_JMP, 'arg1': '-4'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '+6'},
                 ]
         handheld.load(code)
         handheld.run_before_loop()
         self.assertEqual(5, handheld.accumulator)
         self.assertEqual(1, handheld.head)
+
+    def test_run_must_finish(self):
+        handheld = Handheld()
+        code = [{'opcode': Handheld.OP_NOP, 'arg1': '+0'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '+1'},
+                {'opcode': Handheld.OP_JMP, 'arg1': '+4'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '+3'},
+                {'opcode': Handheld.OP_JMP, 'arg1': '-3'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '-99'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '+1'},
+                {'opcode': Handheld.OP_NOP, 'arg1': '-4'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '+6'},
+                ]
+        handheld.load(code)
+        finish = handheld.run_protected()
+        self.assertTrue(finish)
+        self.assertEqual(8, handheld.accumulator)
+
+    def test_found_fixed_code(self):
+        code = [{'opcode': Handheld.OP_NOP, 'arg1': '+0'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '+1'},
+                {'opcode': Handheld.OP_JMP, 'arg1': '+4'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '+3'},
+                {'opcode': Handheld.OP_JMP, 'arg1': '-3'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '-99'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '+1'},
+                {'opcode': Handheld.OP_JMP, 'arg1': '-4'},
+                {'opcode': Handheld.OP_ACC, 'arg1': '+6'},
+                ]
+        code_expected = [{'opcode': Handheld.OP_NOP, 'arg1': '+0'},
+                         {'opcode': Handheld.OP_ACC, 'arg1': '+1'},
+                         {'opcode': Handheld.OP_JMP, 'arg1': '+4'},
+                         {'opcode': Handheld.OP_ACC, 'arg1': '+3'},
+                         {'opcode': Handheld.OP_JMP, 'arg1': '-3'},
+                         {'opcode': Handheld.OP_ACC, 'arg1': '-99'},
+                         {'opcode': Handheld.OP_ACC, 'arg1': '+1'},
+                         {'opcode': Handheld.OP_NOP, 'arg1': '-4'},
+                         {'opcode': Handheld.OP_ACC, 'arg1': '+6'},
+                         ]
+
+        self.assertEqual(code_expected, found_fixed_code(code))
