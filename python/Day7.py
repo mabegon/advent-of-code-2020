@@ -6,18 +6,15 @@ def parse_line(line):
     values = {}
     key = ''
     for occurrence in occurrences:
-       if occurrence[0] != '':
-           values[occurrence[1]] = int(occurrence[0])
-       else:
-           key = occurrence[1]
+        if occurrence[0] != '':
+            values[occurrence[1]] = int(occurrence[0])
+        else:
+            key = occurrence[1]
     return key, values
 
 
 def who_can_hold_by_rule(container_bag, content_bags):
-    # {'light red': { 'bright white': '1', 'muted yellow': '2'}}
     result = {}
-    #container_bag = [element for element in rule.keys() if rule[element] == 'container'][0]
-    #content_bags = [element for element in rule.keys() if rule[element] != 'container']
     for bag in content_bags:
         result[bag] = container_bag
     return result
@@ -50,6 +47,7 @@ def compute_question_1(rules, bag):
     result = who_can_hold(bag, who_can_hold_dict)
     return len(result)
 
+
 def get_rules(fp):
     rules = {}
     for line in fp:
@@ -69,6 +67,7 @@ def count_bags(bag, rules):
             result += content_bags[content_bag] * count_bags(content_bag, rules)
             result += content_bags[content_bag]
     return result
+
 
 def compute_question_2(rules, bag):
     return count_bags(bag, rules)
