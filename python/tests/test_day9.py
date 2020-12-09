@@ -26,3 +26,9 @@ class TestDay9(TestCase):
         preamble = 5
         with open('./input_test_day9.txt') as fp:
             self.assertEqual(127, python.Day9.compute_result_1(fp, preamble))
+
+    def test_encryption_weakness_must_be_62(self):
+        with open('./input_test_day9.txt') as fp:
+            numbers = python.Day9.parse_input(fp) # todo: test separately
+            weak_number = 127
+            self.assertEqual(62, python.Day9.find_encryption_weakness(numbers, weak_number))
