@@ -1,4 +1,4 @@
-from functools import cache, lru_cache
+from functools import cache
 
 
 def parse_input(fp):
@@ -33,24 +33,29 @@ def compute_result1(adapters):
     return differences.count(1) * differences.count(3)
 
 
-def how_many_ways(adapters, current_joltage, target_joltage):
+@cache
+def how_many_ways(current_joltage):
+    global target_joltage
+    global adapters
+
     if current_joltage >= target_joltage - 3:
         return 1
     else:
         candidates = adapter_candidates(adapters, current_joltage)
         result = 0
         for candidate in candidates:
-            adapters_updated = list(adapters.copy())
-            adapters_updated.remove(candidate)
-            result += how_many_ways(adapters_updated, candidate, target_joltage)
+            result += how_many_ways(candidate)
         return result
 
 
-def compute_result2(adapters):
+def compute_result2(local_adapters):
+    global target_joltage
+    global adapters
+    adapters = local_adapters
     current_joltage = 0
     target_joltage = device_joltage(adapters)
     adapters.sort()
-    return how_many_ways(adapters, current_joltage, target_joltage)
+    return how_many_ways(current_joltage)
 
 
 def main():
