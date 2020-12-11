@@ -36,3 +36,12 @@ class TestDay10(TestCase):
         with open('input_test_day10.txt') as fp:
             adapters = python.Day10.parse_input(fp)
         self.assertEqual(220, python.Day10.compute_result1(adapters))
+
+    def test_compute_result2_must_return_8(self):
+        adapters = [16, 10, 15, 5, 1, 11, 7, 19, 6, 12, 4]
+        self.assertEqual(8, python.Day10.compute_result2(adapters))
+
+    def test_compute_result1_must_return_19208(self):
+        with open('input_test_day10.txt') as fp:
+            adapters = python.Day10.parse_input(fp)
+        self.assertEqual(19208, python.Day10.compute_result2(adapters))
